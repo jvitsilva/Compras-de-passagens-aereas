@@ -103,10 +103,10 @@ void main() {
   Passagens pass6 = new Passagens("Belém", "Porto Alegre", "15/12/2022", 850.0);
   op.addPassagens(pass6);
 
-  print("Bem vindo á transportadora de corpo Guanabara!");
+  print("\nBem vindo á transportadora de corpo Guanabara!");
 
   while (controle != 4) {
-    print("########## MENU ##########");
+    print("\n########## MENU ##########");
     print("1 - Cadastrar informações");
     print("2 - Agendar passagens");
     print("3 - Informações gerais");
@@ -166,26 +166,40 @@ void main() {
               print("Passagem comprada com sucesso!");
             }
             //Se não possui dinehiro suficiente
-            else
-              print("Você não tem dinheiro para comprar esta passagem!");
-            print("Deseja depositar algum valor? s/n");
-            var resp = stdin.readLineSync()!;
+            else {
+              while (op.pagamento[numCadastro - 1].getSaldo < 450) {
+                print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                print("Você não tem dinheiro para comprar esta passagem!");
+                print("Deseja depositar algum valor? s/n");
+                var resp = stdin.readLineSync()!;
 
-            if (resp == 's' || resp == 'S') {
-              var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
-              print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
-              print("Quanto deseja depositar?");
-              var deposito = double.parse(stdin.readLineSync()!);
-              saldoInicial += deposito;
-              op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
+                if (resp == 's' || resp == 'S') {
+                  var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
+                  print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                  print("Quanto deseja depositar?");
+                  var deposito = double.parse(stdin.readLineSync()!);
+                  saldoInicial += deposito;
+                  op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
 
-              var controle = op.pagamento[numCadastro - 1].getSaldo;
-              controle -= 450;
-              op.pagamento[numCadastro - 1].setSaldo = controle;
-              op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
+                  if (op.pagamento[numCadastro - 1].getSaldo >= 450) {
+                    var controle = op.pagamento[numCadastro - 1].getSaldo;
+                    controle -= 450;
+                    op.pagamento[numCadastro - 1].setSaldo = controle;
+                    op.pessoas[numCadastro - 1].setCliente = 1;
+                    op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
 
-              print("Passagem comprada com sucesso!");
+                    print("Passagem comprada com sucesso!");
+                    break;
+                  } else
+                    print(
+                        "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                } else if (resp == 'n' || resp == 'N') {
+                  print(
+                      "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                  break;
+                } else
+                  print("Tente outro comando");
+              }
             }
 
             break;
@@ -198,28 +212,45 @@ void main() {
               controle -= 650;
               op.pagamento[numCadastro - 1].setSaldo = controle;
               op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 1;
+              op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
 
               print("Passagem comprada com sucesso!");
             }
             //Se não possui dinehiro suficiente
-            else
-              print("Você não tem dinheiro para comprar esta passagem!");
-            print("Deseja depositar algum valor? s/n");
-            var resp = stdin.readLineSync()!;
+            else {
+              while (op.pagamento[numCadastro - 1].getSaldo < 650) {
+                print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                print("Você não tem dinheiro para comprar esta passagem!");
+                print("Deseja depositar algum valor? s/n");
+                var resp = stdin.readLineSync()!;
 
-            if (resp == 's' || resp == 'S') {
-              var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
-              print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
-              print("Quanto deseja depositar?");
-              var deposito = double.parse(stdin.readLineSync()!);
-              saldoInicial += deposito;
-              op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
-              var controle = op.pagamento[numCadastro - 1].getSaldo;
-              controle -= 650;
-              op.pagamento[numCadastro - 1].setSaldo = controle;
-              op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 1;
+                if (resp == 's' || resp == 'S') {
+                  var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
+                  print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                  print("Quanto deseja depositar?");
+                  var deposito = double.parse(stdin.readLineSync()!);
+                  saldoInicial += deposito;
+                  op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
+
+                  if (op.pagamento[numCadastro - 1].getSaldo >= 650) {
+                    var controle = op.pagamento[numCadastro - 1].getSaldo;
+                    controle -= 650;
+                    op.pagamento[numCadastro - 1].setSaldo = controle;
+                    op.pessoas[numCadastro - 1].setCliente = 1;
+                    op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
+
+                    print("Passagem comprada com sucesso!");
+                    break;
+                  } else
+                    print(
+                        "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                } else if (resp == 'n' || resp == 'N') {
+                  print(
+                      "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                  break;
+                } else
+                  print("Tente outro comando");
+              }
             }
             break;
 
@@ -228,31 +259,48 @@ void main() {
             // se a pessoa tem dinheiro suficiente para comprar
             if (op.pagamento[numCadastro - 1].getSaldo >= 650) {
               var controle = op.pagamento[numCadastro - 1].getSaldo;
-              controle -= 650;
+              controle -= 450;
               op.pagamento[numCadastro - 1].setSaldo = controle;
               op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 2;
+              op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
 
               print("Passagem comprada com sucesso!");
             }
             //Se não possui dinehiro suficiente
-            else
-              print("Você não tem dinheiro para comprar esta passagem!");
-            print("Deseja depositar algum valor? s/n");
-            var resp = stdin.readLineSync()!;
+            else {
+              while (op.pagamento[numCadastro - 1].getSaldo < 650) {
+                print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                print("Você não tem dinheiro para comprar esta passagem!");
+                print("Deseja depositar algum valor? s/n");
+                var resp = stdin.readLineSync()!;
 
-            if (resp == 's' || resp == 'S') {
-              var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
-              print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
-              print("Quanto deseja depositar?");
-              var deposito = double.parse(stdin.readLineSync()!);
-              saldoInicial += deposito;
-              op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
-              var controle = op.pagamento[numCadastro - 1].getSaldo;
-              controle -= 650;
-              op.pagamento[numCadastro - 1].setSaldo = controle;
-              op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 1;
+                if (resp == 's' || resp == 'S') {
+                  var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
+                  print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                  print("Quanto deseja depositar?");
+                  var deposito = double.parse(stdin.readLineSync()!);
+                  saldoInicial += deposito;
+                  op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
+
+                  if (op.pagamento[numCadastro - 1].getSaldo >= 650) {
+                    var controle = op.pagamento[numCadastro - 1].getSaldo;
+                    controle -= 650;
+                    op.pagamento[numCadastro - 1].setSaldo = controle;
+                    op.pessoas[numCadastro - 1].setCliente = 1;
+                    op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
+
+                    print("Passagem comprada com sucesso!");
+                    break;
+                  } else
+                    print(
+                        "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                } else if (resp == 'n' || resp == 'N') {
+                  print(
+                      "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                  break;
+                } else
+                  print("Tente outro comando");
+              }
             }
             break;
 
@@ -264,30 +312,44 @@ void main() {
               controle -= 350;
               op.pagamento[numCadastro - 1].setSaldo = controle;
               op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 3;
+              op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
 
               print("Passagem comprada com sucesso!");
             }
             //Se não possui dinehiro suficiente
             else {
-              print("Você não tem dinheiro para comprar esta passagem!");
-              print("Deseja depositar algum valor? s/n");
-              var resp = stdin.readLineSync()!;
-
-              if (resp == 's' || resp == 'S') {
-                var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
+              while (op.pagamento[numCadastro - 1].getSaldo < 350) {
                 print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
-                print("Quanto deseja depositar?");
-                var deposito = double.parse(stdin.readLineSync()!);
-                saldoInicial += deposito;
-                op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
-                var controle = op.pagamento[numCadastro - 1].getSaldo;
-                controle -= 350;
-                op.pagamento[numCadastro - 1].setSaldo = controle;
-                op.pessoas[numCadastro - 1].setCliente = 1;
-                op.pessoas[numCadastro - 1].setPassagemEscolhida = 3;
+                print("Você não tem dinheiro para comprar esta passagem!");
+                print("Deseja depositar algum valor? s/n");
+                var resp = stdin.readLineSync()!;
 
-                print("Passagem comprada com sucesso!");
+                if (resp == 's' || resp == 'S') {
+                  var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
+                  print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                  print("Quanto deseja depositar?");
+                  var deposito = double.parse(stdin.readLineSync()!);
+                  saldoInicial += deposito;
+                  op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
+
+                  if (op.pagamento[numCadastro - 1].getSaldo >= 350) {
+                    var controle = op.pagamento[numCadastro - 1].getSaldo;
+                    controle -= 350;
+                    op.pagamento[numCadastro - 1].setSaldo = controle;
+                    op.pessoas[numCadastro - 1].setCliente = 1;
+                    op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
+
+                    print("Passagem comprada com sucesso!");
+                    break;
+                  } else
+                    print(
+                        "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                } else if (resp == 'n' || resp == 'N') {
+                  print(
+                      "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                  break;
+                } else
+                  print("Tente outro comando");
               }
             }
             break;
@@ -300,30 +362,45 @@ void main() {
               controle -= 700;
               op.pagamento[numCadastro - 1].setSaldo = controle;
               op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 4;
+              op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
 
               print("Passagem comprada com sucesso!");
             }
             //Se não possui dinehiro suficiente
-            else
-              print("Você não tem dinheiro para comprar esta passagem!");
-            print("Deseja depositar algum valor? s/n");
-            var resp = stdin.readLineSync()!;
+            else {
+              while (op.pagamento[numCadastro - 1].getSaldo < 700) {
+                print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                print("Você não tem dinheiro para comprar esta passagem!");
+                print("Deseja depositar algum valor? s/n");
+                var resp = stdin.readLineSync()!;
 
-            if (resp == 's' || resp == 'S') {
-              var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
-              print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
-              print("Quanto deseja depositar?");
-              var deposito = double.parse(stdin.readLineSync()!);
-              saldoInicial += deposito;
-              op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
-              var controle = op.pagamento[numCadastro - 1].getSaldo;
-              controle -= 700;
-              op.pagamento[numCadastro - 1].setSaldo = controle;
-              op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 4;
+                if (resp == 's' || resp == 'S') {
+                  var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
+                  print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                  print("Quanto deseja depositar?");
+                  var deposito = double.parse(stdin.readLineSync()!);
+                  saldoInicial += deposito;
+                  op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
 
-              print("Passagem comprada com sucesso!");
+                  if (op.pagamento[numCadastro - 1].getSaldo >= 700) {
+                    var controle = op.pagamento[numCadastro - 1].getSaldo;
+                    controle -= 700;
+                    op.pagamento[numCadastro - 1].setSaldo = controle;
+                    op.pessoas[numCadastro - 1].setCliente = 1;
+                    op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
+
+                    print("Passagem comprada com sucesso!");
+                    break;
+                  } else
+                    print(
+                        "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                } else if (resp == 'n' || resp == 'N') {
+                  print(
+                      "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                  break;
+                } else
+                  print("Tente outro comando");
+              }
             }
             break;
 
@@ -335,30 +412,45 @@ void main() {
               controle -= 850;
               op.pagamento[numCadastro - 1].setSaldo = controle;
               op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 5;
+              op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
 
               print("Passagem comprada com sucesso!");
             }
             //Se não possui dinehiro suficiente
-            else
-              print("Você não tem dinheiro para comprar esta passagem!");
-            print("Deseja depositar algum valor? s/n");
-            var resp = stdin.readLineSync()!;
+            else {
+              while (op.pagamento[numCadastro - 1].getSaldo < 850) {
+                print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                print("Você não tem dinheiro para comprar esta passagem!");
+                print("Deseja depositar algum valor? s/n");
+                var resp = stdin.readLineSync()!;
 
-            if (resp == 's' || resp == 'S') {
-              var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
-              print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
-              print("Quanto deseja depositar?");
-              var deposito = double.parse(stdin.readLineSync()!);
-              saldoInicial += deposito;
-              op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
-              var controle = op.pagamento[numCadastro - 1].getSaldo;
-              controle -= 850;
-              op.pagamento[numCadastro - 1].setSaldo = controle;
-              op.pessoas[numCadastro - 1].setCliente = 1;
-              op.pessoas[numCadastro - 1].setPassagemEscolhida = 5;
+                if (resp == 's' || resp == 'S') {
+                  var saldoInicial = op.pagamento[numCadastro - 1].getSaldo;
+                  print("Seu saldo: ${op.pagamento[numCadastro - 1].getSaldo}");
+                  print("Quanto deseja depositar?");
+                  var deposito = double.parse(stdin.readLineSync()!);
+                  saldoInicial += deposito;
+                  op.pagamento[numCadastro - 1].setSaldo = saldoInicial;
 
-              print("Passagem comprada com sucesso!");
+                  if (op.pagamento[numCadastro - 1].getSaldo >= 850) {
+                    var controle = op.pagamento[numCadastro - 1].getSaldo;
+                    controle -= 850;
+                    op.pagamento[numCadastro - 1].setSaldo = controle;
+                    op.pessoas[numCadastro - 1].setCliente = 1;
+                    op.pessoas[numCadastro - 1].setPassagemEscolhida = 0;
+
+                    print("Passagem comprada com sucesso!");
+                    break;
+                  } else
+                    print(
+                        "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                } else if (resp == 'n' || resp == 'N') {
+                  print(
+                      "\nVocê ainda possui saldo insuficiente para comprar a passagem!");
+                  break;
+                } else
+                  print("Tente outro comando");
+              }
             }
             break;
         }
@@ -368,15 +460,17 @@ void main() {
       case 3:
         // listar todos os clientes
         print("### Clientes ###");
-        for (var i = 0; i < op.pessoas.length; i++) {
-          if (op.pessoas[i].getCliente == 1) {
-            print(
-                "\nNome: ${op.pessoas[i].getNome} ${op.pessoas[i].getSobrenome}, Endereço: ${op.pessoas[i].getEndereco}, Saldo: ${op.pagamento[i].getSaldo}");
-            print(
-                "Passagem: ${op.passagens[op.pessoas[i].getPassagemEscolhida].getOrigem} para ${op.passagens[op.pessoas[i].getPassagemEscolhida].getDestino}, Dia ${op.passagens[op.pessoas[i].getPassagemEscolhida].getData}, Valor: ${op.passagens[op.pessoas[i].getPassagemEscolhida].getValor}\n");
+        if (op.pessoas.length == 0) {
+          print("Ainda não temos registros de clientes");
+        } else
+          for (var i = 0; i < op.pessoas.length; i++) {
+            if (op.pessoas[i].getCliente == 1) {
+              print(
+                  "\nNome: ${op.pessoas[i].getNome} ${op.pessoas[i].getSobrenome}, Endereço: ${op.pessoas[i].getEndereco}, Saldo: ${op.pagamento[i].getSaldo}");
+              print(
+                  "Passagem: ${op.passagens[op.pessoas[i].getPassagemEscolhida].getOrigem} para ${op.passagens[op.pessoas[i].getPassagemEscolhida].getDestino}, Dia ${op.passagens[op.pessoas[i].getPassagemEscolhida].getData}, Valor: ${op.passagens[op.pessoas[i].getPassagemEscolhida].getValor}\n");
+            }
           }
-        }
-
         break;
 
       case 4:
